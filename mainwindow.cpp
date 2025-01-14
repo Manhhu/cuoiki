@@ -51,6 +51,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_Previous, &QPushButton::clicked, this, &MainWindow::playPreviousSong);
     connect(ui->horizontalSlider_Duration, &QSlider::valueChanged, this, &MainWindow::checkSliderPosition);
 
+    connect(ui->pushButton_Bluetooth, &QPushButton::clicked, this, &MainWindow::toggleBluetooth);
+
+
     // Volume control
     connect(ui->horizontalSlider_Volume, &QSlider::valueChanged, [&](int value) {
         if (!audioOutput->isMuted()) {
@@ -230,6 +233,63 @@ void MainWindow::connectBluetooth() {
         QMessageBox::information(this, "Device Found", info.name() + " - " + info.address().toString());
     });
 }
+
+void MainWindow::onBluetoothButtonClicked() {
+    // Ví dụ: bắt đầu tìm kiếm thiết bị Bluetooth
+    if (discoveryAgent->isActive()) {
+        discoveryAgent->stop();
+        QMessageBox::information(this, "Bluetooth", "Dừng tìm kiếm thiết bị.");
+    } else {
+        discoveryAgent->start();
+        QMessageBox::information(this, "Bluetooth", "Bắt đầu tìm kiếm thiết bị.");
+    }
+}
+
+// void MainWindow::toggleBluetooth() {
+//     QBluetoothLocalDevice localDevice;
+
+//     if (!localDevice.isValid()) {
+//         QMessageBox::critical(this, "Bluetooth", "Bluetooth không khả dụng trên thiết bị này!");
+//         return;
+//     }
+
+//     // Kiểm tra và bật chế độ discoverable nếu chưa bật
+//     if (!localDevice.hostMode().testFlag(QBluetoothLocalDevice::HostDiscoverable)) {
+//         localDevice.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
+//         QMessageBox::information(this, "Bluetooth", "Bluetooth đã được bật.");
+//     } else {
+//         QMessageBox::information(this, "Bluetooth", "Bluetooth đã sẵn sàng.");
+//     }
+// }
+
+void MainWindow::toggleBluetooth() {
+    QBluetoothLocalDevice localDevice;
+
+    // Kiểm tra nếu Bluetooth không khả dụng
+    if (!localDevice.isValid()) {
+        QMessageBox::critical(this, "Bluetooth", "Bluetooth không khả dụng trên thiết bị này!");
+        return;
+    }
+
+    // Kiểm tra chế độ hiện tại và chuyển sang HostDiscoverable nếu cần
+    if (localDevice.hostMode() != QBluetoothLocalDevice::HostDiscoverable) {
+        localDevice.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
+        QMessageBox::information(this, "Bluetooth", "Bluetooth đã được bật.");
+    } else {
+        QMessageBox::information(this, "Bluetooth", "Bluetooth đã ở chế độ HostDiscoverable.");
+    }
+}
+
+// QBluetoothLocalDevice localDevice;
+// if (!localDevice.isValid()) {
+//     QMessageBox::critical(this, "Bluetooth", "Bluetooth không khả dụng trên thiết bị này!");
+//     return;
+// }
+
+// if (!localDevice.hostMode().testFlag(QBluetoothLocalDevice::HostDiscoverable)) {
+//     localDevice.setHostMode(QBluetoothLocalDevice::HostDiscoverable);
+//     QMessageBox::information(this, "Bluetooth", "Bluetooth đã được bật.");
+// }
 
 
 // void MainWindow::positionChanged(qint64 duration) {

@@ -13,6 +13,8 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QMessageBox>
+#include <QBluetoothLocalDevice>
+
 
 namespace Ui {
 class MainWindow;
@@ -44,6 +46,9 @@ private slots:
 
     void positionChanged(qint64 duration);
     void durationChanged(qint64 duration);
+
+    void onBluetoothButtonClicked();
+    void toggleBluetooth();
 
     // Additional slots...
 private:

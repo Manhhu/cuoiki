@@ -51,6 +51,7 @@ public:
     QPushButton *pushButton_SavePlaylist;
     QPushButton *pushButton_LoadPlaylist;
     QListWidget *playlistWidget;
+    QPushButton *pushButton_Bluetooth;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -245,10 +246,28 @@ public:
         playlistWidget = new QListWidget(centralwidget);
         playlistWidget->setObjectName("playlistWidget");
         playlistWidget->setGeometry(QRect(20, 320, 151, 111));
+        pushButton_Bluetooth = new QPushButton(centralwidget);
+        pushButton_Bluetooth->setObjectName("pushButton_Bluetooth");
+        pushButton_Bluetooth->setGeometry(QRect(340, 950, 221, 29));
+        pushButton_Bluetooth->setStyleSheet(QString::fromUtf8("ui->pushButton_Bluetooth->setStyleSheet(R\"(\n"
+"    QPushButton {\n"
+"        background-color: #3498db;\n"
+"        border-radius: 15px;\n"
+"        color: white;\n"
+"        font-size: 16px;\n"
+"    }\n"
+"    QPushButton:hover {\n"
+"        background-color: #2980b9;\n"
+"    }\n"
+"    QPushButton:pressed {\n"
+"        background-color: #1c5985;\n"
+"    }\n"
+")\");\n"
+""));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1962, 21));
+        menubar->setGeometry(QRect(0, 0, 1962, 25));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -276,6 +295,7 @@ public:
         pushButton_AddSong->setText(QCoreApplication::translate("MainWindow", "Add Song", nullptr));
         pushButton_SavePlaylist->setText(QCoreApplication::translate("MainWindow", "Save Playlist", nullptr));
         pushButton_LoadPlaylist->setText(QCoreApplication::translate("MainWindow", "Load Playlist", nullptr));
+        pushButton_Bluetooth->setText(QCoreApplication::translate("MainWindow", "Bluetooth", nullptr));
     } // retranslateUi
 
 };
